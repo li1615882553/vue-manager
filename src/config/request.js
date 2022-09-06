@@ -1,5 +1,6 @@
 import axios from 'axios'
 import router from '@/router'
+import cookieAuthInfo from "../util/cook";
 
 const CancelToken = axios.CancelToken;
 let source = CancelToken.source();
@@ -18,6 +19,9 @@ const REQUEST_INTERCEPTORS_HANDLER = config => {
   config.cancelToken = source.token;
   addRequestMark(config) && source.cancel();
   source = CancelToken.source();
+  if (cookieAuthInfo.token && !config.headers['Authorization']) {
+    config.headers['Authorization'] = 'Bearer ' + cookieAuthInfo.token
+  }
   return config;
 }
 
@@ -61,7 +65,7 @@ instance.interceptors.request.use(
 // 添加响应拦截器
 instance.interceptors.response.use(
   response => {
-    removeRequestMark(response.config);
+    removeRequestMark(response.config, "response");
     return response.data;
   },
   RESPONSE_ERROR_INTERCEPTORS

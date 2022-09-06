@@ -20,4 +20,6 @@ subSysRouterWebpackContext.keys().forEach(path => {
     sysMenus[key] = getMenusFromRoute(value.default)
 })
 
+console.log(sysMenus)
+
 export default sysMenus

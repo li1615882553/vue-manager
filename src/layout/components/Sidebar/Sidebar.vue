@@ -7,43 +7,40 @@
 			background-color="#324157"
 			active-text-color="#20a0ff"
 			text-color="#bfcbd9"
-			unique-opened
-			router
 		>
-			<template v-for="item in items">
-				<template v-if="item.subs">
-					<el-submenu :index="item.index" :key="item.index">
+			<template v-for="item in menus">
+				<template v-if="item.children">
+					<el-submenu :index="item.path" :key="item.path">
 						<template slot="title">
 							<i :class="item.icon"></i>
-							<span slot="title">{{ item.title }}</span>
+							<span slot="title">{{ item.name }}</span>
 						</template>
-						<template v-for="subItem in item.subs">
+						<template v-for="subItem in item.children">
 							<el-submenu
-								v-if="subItem.subs"
-								:index="subItem.index"
-								:key="subItem.index"
+								v-if="subItem.children"
+								:index="subItem.path"
+								:key="subItem.path"
 							>
-								<template slot="title">{{ subItem.title }}</template>
-								<el-menu-item
-									v-for="(threeItem, i) in subItem.subs"
-									:key="i"
-									:index="threeItem.index"
-									>{{ threeItem.title }}</el-menu-item
-								>
+								<template slot="title">{{ subItem.name }}</template>
+								<app-link :to="resolvePath()">
+									<el-menu-item
+										v-for="(threeItem, i) in subItem.children"
+										:key="i"
+										:index="threeItem.path"
+										>{{ threeItem.name }}
+									</el-menu-item>
+								</app-link>
 							</el-submenu>
-							<el-menu-item
-								v-else
-								:index="subItem.index"
-								:key="subItem.index"
-								>{{ subItem.title }}</el-menu-item
-							>
+							<el-menu-item v-else :index="subItem.path" :key="subItem.path">{{
+								subItem.name
+							}}</el-menu-item>
 						</template>
 					</el-submenu>
 				</template>
 				<template v-else>
-					<el-menu-item :index="item.index" :key="item.index">
+					<el-menu-item :index="item.path" :key="item.path">
 						<i :class="item.icon"></i>
-						<span slot="title">{{ item.title }}</span>
+						<span slot="title">{{ item.name }}</span>
 					</el-menu-item>
 				</template>
 			</template>
@@ -52,111 +49,29 @@
 </template>
 
 <script>
+	import AppLink from "./Link.vue";
 	export default {
 		data() {
 			return {
 				collapse: false,
-				items: [
-					{
-						icon: "el-icon-lx-home",
-						index: "dashboard",
-						title: "系统首页",
-					},
-					{
-						icon: "el-icon-lx-cascades",
-						index: "table",
-						title: "基础表格",
-					},
-					{
-						icon: "el-icon-lx-copy",
-						index: "tabs",
-						title: "tab选项卡",
-					},
-					{
-						icon: "el-icon-document-copy",
-						index: "3",
-						title: "表单相关",
-						subs: [
-							{
-								index: "form",
-								title: "基本表单",
-							},
-							{
-								index: "3-2",
-								title: "三级菜单",
-								subs: [
-									{
-										index: "editor",
-										title: "富文本编辑器",
-									},
-									{
-										index: "markdown",
-										title: "markdown编辑器",
-									},
-								],
-							},
-							{
-								index: "upload",
-								title: "文件上传",
-							},
-						],
-					},
-					{
-						icon: "el-icon-lx-emoji",
-						index: "icon",
-						title: "自定义图标",
-					},
-					{
-						icon: "el-icon-pie-chart",
-						index: "charts",
-						title: "schart图表",
-					},
-					{
-						icon: "el-icon-rank",
-						index: "6",
-						title: "拖拽组件",
-						subs: [
-							{
-								index: "drag",
-								title: "拖拽列表",
-							},
-							{
-								index: "dialog",
-								title: "拖拽弹框",
-							},
-						],
-					},
-					{
-						icon: "el-icon-lx-global",
-						index: "i18n",
-						title: "国际化功能",
-					},
-					{
-						icon: "el-icon-lx-warn",
-						index: "7",
-						title: "错误处理",
-						subs: [
-							{
-								index: "permission",
-								title: "权限测试",
-							},
-							{
-								index: "404",
-								title: "404页面",
-							},
-						],
-					},
-					{
-						icon: "el-icon-lx-redpacket_fill",
-						index: "/donate",
-						title: "支持作者",
-					},
-				],
 			};
 		},
 		inject: ["eventBus"],
 
 		computed: {
+			menus() {
+				const curSys = this.$store.getters.curSys;
+				var menuTemp = [];
+				if (
+					this.$store.getters.sysMenus[curSys] &&
+					this.$store.getters.sysMenus[curSys][0] &&
+					this.$store.getters.sysMenus[curSys][0]["children"]
+				) {
+					menuTemp = this.$store.getters.sysMenus[curSys][0]["children"];
+				}
+				console.log(curSys, this.$store.getters.sysMenus)
+				return menuTemp;
+			},
 			onRoutes() {
 				return this.$route.path.replace("/", "");
 			},
@@ -167,6 +82,9 @@
 				this.collapse = msg;
 				this.eventBus.$emit("collapse-content", msg);
 			});
+		},
+		methods: {
+			resolvePath(menu, routePath) {},
 		},
 	};
 </script>

@@ -1,7 +1,7 @@
 const route = [
   {
-    name: 'blog',
-    path: 'blog',
+    name: 'content',
+    path: 'content',
     component: () => import('../layout'),
     children: [
       {

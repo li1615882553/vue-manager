@@ -1,8 +1,8 @@
 import request from "../config/request";
 
-export function login(username) {
+export function login({ username, password }) {
   return request({
-    url: `login`,
+    url: `user/login`,
     method: 'post',
     data: {
       username
@@ -12,17 +12,14 @@ export function login(username) {
 
 export function logout() {
   return request({
-    url: `logout`,
+    url: `user/logout`,
     method: 'get',
   })
 }
 
 export function getUserInfo(token) {
   return request({
-    url: `user/getUserInfo`,
-    method: 'post',
-    data: {
-      token
-    }
+    url: `user/getUserInfo/${token}`,
+    method: 'get'
   })
 }

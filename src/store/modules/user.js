@@ -1,13 +1,11 @@
-import { getUserInfo } from "../../api/user";
+import cookieAuthInfo from "../../util/cook";
+import { login as userLogin, logout, getUserInfo } from "../../api/user";
 
 const state = {
   userInfo: null
 }
-
-const getters = {
-  userInfo: state => {
-    return state.userInfo
-  }
+const getters ={
+  
 }
 
 const mutations = {
@@ -16,12 +14,15 @@ const mutations = {
   }
 }
 const actions = {
-  clearUserConfig({commit}) {
+  login({ commit, state }, loginInfo) {
+    return userLogin(loginInfo).then(res => configUserinfo({ commit, state }, res))
+  },
+  clearUserConfig({ commit }) {
     clearUserConfig(commit)
   },
-  getUserInfo({commit, state}, token){
+  getUserInfo({ commit, state }, token) {
     return getUserInfo(token).then(userinfo => {
-      debugger
+      configUserinfo({ commit, state }, userinfo)
     })
   }
 }
@@ -30,7 +31,14 @@ function clearUserConfig(commit) {
   commit('SET_USERINFO', null)
 }
 
-export default{
+function configUserinfo({ commit, state }, res) {
+  cookieAuthInfo.token = res.token;
+  cookieAuthInfo.username = res.username;
+  commit('SET_USERINFO', {token: res.token, username: res.username});
+  return state.userInfo;
+}
+
+export default {
   namespaced: true,
   state,
   getters,

@@ -1,47 +1,71 @@
 import Mock from 'mockjs';
-import "./menu"
+import sysMenus from "./menu"
 //延时200-600毫秒请求到数据
 Mock.setup({
-  timeout: '200-600'
+  timeout: '100-200'
 })
-let userList = ['admin', 'viewer'];
-let userInfo = {}. userToken = {}, userAuth = {
-  'admin': ['admin','blog'],
-  'viewer':['blog']
+const sysInfo = [
+  {
+    icon: "admin",
+    title: "后台管理",
+    path: "admin",
+    hidden: false
+  },
+  {
+    icon: "content",
+    title: "前端展示",
+    path: "content",
+    hidden: false
+  }
+];
+let userList = ['admin', 'content'];
+let userAuth = {
+  'admin': ['admin', 'content'],
+  'content': ['content']
 };
 
-Mock.mock('app/ywxtMenus', {
-  "mtime": "@datetime",//随机生成日期时间
-  "score|1-800": 800,//随机生成1-800的数字
-  "rank|1-100": 100,//随机生成1-100的数字
-  "stars|1-5": 5,//随机生成1-5的数字
-  "nickname": "@cname",//随机生成中文名字
+Mock.mock('app/ywxts', 'get', (data) => {
+  return sysInfo
+});
+Mock.mock(/app\/menu[\s\S]*?/, 'get', (data) => {
+  const sysName = data.url.slice(data.url.lastIndexOf("/")+1);
+  return sysMenus[sysName];
 });
 
 Mock.mock('user/login', 'post', (data) => {
-  if(userList.indexOf(data.username) === -1){
+  const body = JSON.parse(data.body)
+  if (userList.indexOf(body.username) === -1) {
     return {
       status: 1,
       msg: "未找到当前用户信息"
     }
   }
-  const token = Math.random().slice(2);
-  userInfo[data.username] =token;
-  userToken[token] = data.username;
+  const token = Math.random().toString().slice(2);
+  let userInfo = JSON.parse(sessionStorage.getItem('userInfo')) || {};
+  userInfo[body.username] = token;
+  sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+  let userToken = JSON.parse(sessionStorage.getItem('userToken'))  || {};
+  userToken[token] = body.username;
+  sessionStorage.setItem('userToken', JSON.stringify(userToken));
+  
   return {
     status: 0,
-    username: data.username,
-    token: userInfo[data.username]
+    username: body.username,
+    token: userInfo[body.username]
   }
 });
 
-Mock.mock('user/getUserInfo', 'post', (data) => {
-  if(userToken[data.token]){
-    let username = userToken[data.token];
+Mock.mock(/user\/getUserInfo[\s\S]*?/, 'get', (data) => {
+  const token = data.url.slice(data.url.lastIndexOf("/")+1);
+  let userToken = JSON.parse(sessionStorage.getItem('userToken'))  || {};
+  if (userToken[token]) {
+    let username = userToken[token];
     return {
       username,
-      "sysList": userAuth[username]
+      token: token
     }
+  } else {
+
   }
-  
 });

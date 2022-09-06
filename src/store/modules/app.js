@@ -16,7 +16,7 @@ const mutations = {
     if (!state.sysInfos.filter(i => i.name === sysInfo.name).length) {
       state.sysInfos.push(sysInfo);
     }
-    state.curSys = sys
+    state.curSys = sysInfo.name;
   },
   TOGGLE_SIDEBAR(state){
     state.sidebar = !state.sidebar;

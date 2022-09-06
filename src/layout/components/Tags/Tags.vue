@@ -3,7 +3,11 @@
 		<div class="tags" ref="tags">
 			<div class="tags-inner" :class="{ 'tags-lrbtn': hasOverFlow }">
 				<div class="handlerMove left" @click="handlerMove(-80)">
-					<Icon icon-class="fangxiang-zuo-shuangxian" :width="16" :height="16"></Icon>
+					<Icon
+						icon-class="fangxiang-zuo-shuangxian"
+						:width="16"
+						:height="16"
+					></Icon>
 					<!-- <i class="el-icon-d-arrow-left"></i> -->
 				</div>
 				<ul ref="tags-ul" :class="{ shrink: hasOverFlow }">
@@ -72,9 +76,6 @@
 			},
 			// 关闭单个标签
 			closeTags(index) {
-				// if(this.tagsList.length === 1) {
-				//   this.$message.error(`页面无法关闭`);
-				// } else {
 				const delItem = this.tagsList.splice(index, 1)[0];
 				const item = this.tagsList[index]
 					? this.tagsList[index]
@@ -85,7 +86,6 @@
 					this.$router.push("/");
 				}
 				this.judgeLRBtn();
-				// }
 			},
 			// 关闭全部标签
 			closeAll() {
@@ -337,16 +337,16 @@
 		right: 0px;
 	}
 	/* .tags-close-box {
-		        position: absolute;
-		        right: 0;
-		        top: 0;
-		        box-sizing: border-box;
-		        padding-top: 1px;
-		        text-align: center;
-		        width: 110px;
-		        height: 30px;
-		        background: #fff;
-		        box-shadow: -3px 0 15px 3px rgba(0, 0, 0, .1);
-		        z-index: 10;
-		    } */
+			        position: absolute;
+			        right: 0;
+			        top: 0;
+			        box-sizing: border-box;
+			        padding-top: 1px;
+			        text-align: center;
+			        width: 110px;
+			        height: 30px;
+			        background: #fff;
+			        box-shadow: -3px 0 15px 3px rgba(0, 0, 0, .1);
+			        z-index: 10;
+			    } */
 </style>
