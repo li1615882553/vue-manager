@@ -1,4 +1,5 @@
-import request from "../config/request";
+import request from "@/config/request";
+import cookieAuthInfo from "@/util/cook";
 
 export function login({ username, password }) {
   return request({
@@ -10,9 +11,10 @@ export function login({ username, password }) {
   })
 }
 
+//因为mock无法获取header, 所以需要将token通过参数传输
 export function logout() {
   return request({
-    url: `user/logout`,
+    url: `user/logout/${cookieAuthInfo.token}`,
     method: 'get',
   })
 }

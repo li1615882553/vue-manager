@@ -1,5 +1,6 @@
 let sysMenus = {};
 
+//暂时使用同一的icon样式,后期可对菜单进行配置
 const filterMenus = ({name,path}) => ({name, path})
 function getMenusFromRoute(routers) {
     const menus = [];

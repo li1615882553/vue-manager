@@ -20,6 +20,10 @@ const withoutAuthorityRoot = [
   {
     path: '/404',
     component: () => import('../view/errorPage/404.vue')
+  },
+  {
+    path: '/logout',
+    component: () => import('../view/logout/logout.js')
   }
 ]
 
