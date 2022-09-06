@@ -12,7 +12,8 @@ const getters = {
 const mutations = {
   SET_MENUS: (state, res) => {
     state.menus[res.sys] = res.data;
-
+    //单纯的增加不会触发响应式
+    state.menus = { ...state.menus }
   },
   SET_YWXT: (state, res) => {
     state.ywxt = res || [];

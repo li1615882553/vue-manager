@@ -6,17 +6,17 @@ const route = [
     children:[
       {
         name: 'admin菜单一',
-        path: "hello",
+        path: "admin-1",
         component: () => import('../view/hello')
       },
       {
         name: 'admin菜单二',
-        path: "hello",
+        path: "admin-2",
         component: () => import('../view/hello'),
         children:[
           {
             name: 'admin菜单二--一',
-            path: "hello",
+            path: "admin-2-1",
             component: () => import('../view/hello')
           },
         ]

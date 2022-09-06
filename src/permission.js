@@ -51,7 +51,7 @@ async function changeSysGuard(to, from ,next){
     next();
     return ;
   }
-
+  
   store.dispatch("app/changeSys", toSysConfig);
   await store.dispatch('menu/getMenus', {
     sysName: toSysName

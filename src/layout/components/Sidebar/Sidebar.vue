@@ -69,6 +69,7 @@
 				) {
 					menuTemp = this.$store.getters.sysMenus[curSys][0]["children"];
 				}
+				console.log(curSys, this.$store.getters.sysMenus)
 				return menuTemp;
 			},
 			onRoutes() {
