@@ -1,7 +1,7 @@
 {
   "name": "vue-manager",
   "version": "0.0.1",
-  "description": "A learning vue manager",
+  "description": "一个基于vue2支持多子系统的管理平台框架",
   "author": "li1615882553",
   "license": "MIT",
   "private": true,
