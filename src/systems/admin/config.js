@@ -2,5 +2,5 @@
 export default {
   name:'admin',
   sysTitle: '博客后台管理',
-  startPage: '/'
+  startPage: '/admin-1'
 }

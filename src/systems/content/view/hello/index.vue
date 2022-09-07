@@ -11,7 +11,6 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'Hello',
   created() {
-    this.$store.commit('app/SET_CURSYS', 'blog')
   },
   computed:{
     ...mapGetters('app',[

@@ -3,8 +3,8 @@ const state = {
   curSys: null,
   /**所有系统的信息 */
   sysInfos: [],
-  /**侧边栏是否打开 */
-  sidebar: true
+  /**侧边栏是否收折 */
+  sidebar: false
 }
 
 const getters = {
@@ -31,7 +31,7 @@ const actions = {
     commit("SET_CURSYS",sysInfo)
   },
   toggleSidebar({ commit }) {
-    commit(TOGGLE_SIDEBAR)
+    commit('TOGGLE_SIDEBAR')
   },
   
 }

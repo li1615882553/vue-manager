@@ -1,5 +1,5 @@
 export default {
   name:'content',
-  sysTitle: '我的博客',
-  startPage: '/'
+  sysTitle: '前端展示',
+  startPage: '/hello'
 }

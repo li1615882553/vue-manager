@@ -1,7 +1,7 @@
 {
   "name": "vue-manager",
   "version": "0.0.1",
-  "description": "A learning vue manager",
+  "description": "一个基于vue2支持多子系统的管理平台框架",
   "author": "li1615882553",
   "license": "MIT",
   "private": true,
@@ -17,6 +17,7 @@
     "element-ui": "^2.15.3",
     "js-cookie": "^3.0.1",
     "vue": "^2.5.2",
+    "vue-fragment": "^1.6.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.6.2"
   },
