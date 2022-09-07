@@ -1,10 +1,8 @@
 <template>
-  <svg  :class="svgClass" 
-        :style="{
-            'width':`${width}px`,
-            'height':`${height}px`
-        }" 
-        aria-hidden="true" >
+  <svg :class="svgClass" :style="{
+      'width':`${width}px`,
+      'height':`${height}px`
+  }" aria-hidden="true">
     <use :xlink:href="iconName" ref="svgRefs"></use>
   </svg>
 </template>
@@ -19,11 +17,11 @@ export default {
     className: {
       type: String
     },
-    width:{
-        type:Number
+    width: {
+      type: Number
     },
-    height:{
-        type:Number
+    height: {
+      type: Number
     }
   },
   computed: {
@@ -38,13 +36,13 @@ export default {
       }
     }
   },
-  mounted(){      
-  } 
+  mounted() {
+  }
 }
 </script>
 
 <style scoped>
-.svg-icon {  
+.svg-icon {
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;

@@ -56,6 +56,23 @@ Mock.mock('user/login', 'post', (data) => {
   }
 });
 
+Mock.mock(/user\/logout[\s\S]*?/, 'get', (data) => {
+  const token = data.url.slice(data.url.lastIndexOf("/")+1);
+  
+  let userToken = JSON.parse(sessionStorage.getItem('userToken'))  || {};
+  let username = userToken[token];
+  delete userToken[token];
+  sessionStorage.setItem('userToken', JSON.stringify(userToken));
+
+  let userInfo = JSON.parse(sessionStorage.getItem('userInfo')) || {};
+  delete userToken[username];
+  sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+  
+  return {
+    status: 0
+  }
+});
+
 Mock.mock(/user\/getUserInfo[\s\S]*?/, 'get', (data) => {
   const token = data.url.slice(data.url.lastIndexOf("/")+1);
   let userToken = JSON.parse(sessionStorage.getItem('userToken'))  || {};

@@ -9,6 +9,15 @@ import cookieAuthInfo from "@/util/cook";
 const NEEDNOT_AUTH = ['/login', '/404']
 const NEEDNOT_REDIRECT = ['/404', '/', '/401', '/logout']
 
+function beforAuthGuard(to, from, next){
+  //有token 或者 没有token跳转的是不需要登陆信息的页面则 允许跳转
+  if(cookieAuthInfo.token || NEEDNOT_AUTH.indexOf(to.path) !== -1){
+    return next();
+  }
+  //没有token,则跳往登录页
+  nextLogin(next, to);
+}
+
 async function authGuard(to, from, next) {
   if (NEEDNOT_AUTH.indexOf(to.path) !== -1) {
     return next()
@@ -20,6 +29,7 @@ async function authGuard(to, from, next) {
   return next();
 }
 
+//拦截登陆也的路由
 //拦截起始页的路由, 跳转到第一个业务系统
 async function startPathGuard(to, from, next) {
   if (to.path !== "/") {
@@ -85,6 +95,7 @@ function nextLogin(next, { path }) {
   })
 }
 
+router.beforeEach(beforAuthGuard);
 router.beforeEach(startPathGuard);
 router.beforeEach(authGuard);
 router.beforeEach(changeSysGuard);

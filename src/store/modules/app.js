@@ -31,7 +31,7 @@ const actions = {
     commit("SET_CURSYS",sysInfo)
   },
   toggleSidebar({ commit }) {
-    commit(MUTATION_TYPES.TOGGLE_SIDEBAR)
+    commit(TOGGLE_SIDEBAR)
   },
   
 }
