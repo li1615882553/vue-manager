@@ -68,6 +68,8 @@ async function changeSysGuard(to, from ,next){
   })
   currSysConfig && currSysConfig.leave && (await currSysConfig.leave(store))
   toSysConfig.enter && (await toSysConfig.enter(store))
+  to.path === `/${toSysName}` && toSysConfig.startPage !== '/' ? next(`/${toSysName}${toSysConfig.startPage}`) : next()
+
   next();
 }
 

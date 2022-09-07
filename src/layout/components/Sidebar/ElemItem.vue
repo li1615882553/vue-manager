@@ -17,7 +17,7 @@ export default {
     }
   },
   render(h, context) {
-    const { icon, title, iconType } = context.props
+    const { icon, title } = context.props
     const vnodes = []
     if (icon) {
       vnodes.push(<Icon className="sidebar-svg" iconClass={icon} height={20} width={20}></Icon>)

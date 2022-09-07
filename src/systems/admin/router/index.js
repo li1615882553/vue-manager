@@ -7,7 +7,10 @@ const route = [
       {
         name: 'admin菜单一',
         path: "admin-1",
-        component: () => import('../view/hello')
+        component: () => import('../view/hello'),
+        meta:{
+          title: "admin菜单一"
+        }
       },
       {
         name: 'admin菜单二',
@@ -17,7 +20,10 @@ const route = [
           {
             name: 'admin菜单二--一',
             path: "admin-2-1",
-            component: () => import('../view/hello')
+            component: () => import('../view/hello'),
+            meta:{
+              title: "admin菜单二--一"
+            }
           },
         ]
       }
