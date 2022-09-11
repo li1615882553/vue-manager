@@ -90,7 +90,6 @@
 				return this.$store.getters.userInfo.username;
 			},
 			subSystems() {
-        console.log(this.$store.state.menu.ywxt)
 				return (this.$store.state.menu.ywxt || []).filter(
 					({ hidden }) => !hidden
 				);

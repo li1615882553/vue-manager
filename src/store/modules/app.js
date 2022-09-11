@@ -8,7 +8,6 @@ const state = {
 }
 
 const getters = {
-  curSys: state => state.curSys
 }
 
 const mutations = {

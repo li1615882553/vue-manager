@@ -79,7 +79,7 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="scss">
 .process_margin {
   margin-top: 100px;
 }

@@ -52,7 +52,7 @@ async function startPathGuard(to, from, next) {
 //切换系统时调用
 async function changeSysGuard(to, from ,next){
   const toSysName = getSystemFromPath(to.path)
-  const currSysName = store.getters.currSys
+  const currSysName = store.getters.curSys
   const toSysConfig = FrmConfig.sysConfig[toSysName]
   const currSysConfig = FrmConfig.sysConfig[currSysName]
 
@@ -61,7 +61,12 @@ async function changeSysGuard(to, from ,next){
     next();
     return ;
   }
-  
+  console.log(toSysName + "    " + currSysName)
+  if(toSysName === currSysName){
+    const startPage = `/${toSysName}${toSysConfig.startPage}`;
+    to.path === `/${toSysName}` ? next(startPage) : next();
+    return ;
+  }
   store.dispatch("app/changeSys", toSysConfig);
   await store.dispatch('menu/getMenus', {
     sysName: toSysName
@@ -69,8 +74,6 @@ async function changeSysGuard(to, from ,next){
   currSysConfig && currSysConfig.leave && (await currSysConfig.leave(store))
   toSysConfig.enter && (await toSysConfig.enter(store))
   to.path === `/${toSysName}` && toSysConfig.startPage !== '/' ? next(`/${toSysName}${toSysConfig.startPage}`) : next()
-
-  next();
 }
 
 async function recoverUserInfo() {

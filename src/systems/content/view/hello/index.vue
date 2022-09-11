@@ -1,7 +1,6 @@
 <template>
   <h1>
     This is blog module's hello! 
-    {{ $store.getters.curSys }}
     {{ curSys }}
   </h1>
 </template>
@@ -13,7 +12,7 @@ export default {
   created() {
   },
   computed:{
-    ...mapGetters('app',[
+    ...mapGetters([
       'curSys'
     ])
   }
